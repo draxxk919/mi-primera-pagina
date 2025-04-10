@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página Personal de Jimmy</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #e3f2fd;
+      color: #333;
+      overflow: hidden;
+    }
+    header {
+      background-color: #1976d2;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+    }
+    section {
+      padding: 2rem;
+      text-align: center;
+      position: relative; /* Necesario para las posiciones de la imagen */
+      height: 80vh; /* Ajusta para que la imagen tenga espacio */
+    }
+    img {
+      max-width: 100px; /* Tamaño inicial de la imagen */
+      height: auto;
+      position: absolute; /* Para poder mover la imagen */
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%); /* Centrado inicial */
+      border: 2px solid #1976d2;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    footer {
+      background-color: #0d47a1;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .particle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: #ffbb00;
+      border-radius: 50%;
+      animation: float 5s infinite ease-in-out;
+    }
+    @keyframes float {
+      0% {
+        transform: translateY(0) translateX(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(500px) translateX(50px);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Hola, ¿Cómo estás?</h1>
+    <p>Mira lo que aprendí hacer</p>
+  </header>
+  <section>
+    <img id="movible" src="imagen.jpg" alt="Imagen especial">
+  </section>
+  <footer>
+    <p>Creado con cariño por Jimmy</p>
+  </footer>
+
+  <script>
+    // Confeti al cargar la página
+    window.onload = function() {
+      for (let i = 0; i < 100; i++) {
+        const particle = document.createElement("div");
+        particle.classList.add("particle");
+        particle.style.left = Math.random() * window.innerWidth + "px";
+        particle.style.top = Math.random() * window.innerHeight + "px";
+        particle.style.backgroundColor =
+          ["#ffbb00", "#00ccff", "#ff44aa", "#99ff66"][Math.floor(Math.random() * 4)];
+        document.body.appendChild(particle);
+      }
+    };
+
+    // Cambiar posición de la imagen al hacer clic
+    const imagen = document.getElementById("movible");
+    imagen.addEventListener("click", function() {
+      const nuevaPosicionX = Math.random() * (window.innerWidth - imagen.width);
+      const nuevaPosicionY = Math.random() * (window.innerHeight - imagen.height);
+      imagen.style.left = nuevaPosicionX + "px";
+      imagen.style.top = nuevaPosicionY + "px";
+    });
+  </script>
+</body>
+</html>
