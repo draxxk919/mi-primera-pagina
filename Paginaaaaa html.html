@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página Personal de Jimmy</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #333;
+      overflow: hidden;
+      position: relative;
+      background: #FDEEF4 url('hello_kitty_background.jpg') center no-repeat;
+      background-size: contain;
+      opacity: 0.8;
+    }
+    header {
+      background-color: rgba(248, 187, 208, 0.8);
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+    header img {
+      max-width: 50px;
+      height: auto;
+    }
+    section {
+      padding: 2rem;
+      text-align: center;
+      position: relative;
+      height: 80vh;
+    }
+    #caja {
+      width: 200px;
+      height: 200px;
+      background-color: #4CAF50;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+      border: 3px solid #388E3C;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.3s ease-in-out;
+    }
+    #movible {
+      display: none;
+      max-width: 100px;
+      height: auto;
+      border: 2px solid #1976d2;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.3s ease, max-width 0.3s ease;
+      position: absolute;
+    }
+    #pucca {
+      display: none;
+      max-width: 100px;
+      margin: 0 auto;
+      text-align: center;
+      cursor: pointer;
+    }
+    #pucca-text {
+      display: none;
+      font-size: 20px;
+      color: #D32F2F;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 10px;
+    }
+    .frase {
+      position: absolute;
+      font-size: 18px;
+      font-weight: bold;
+      color: #D32F2F;
+      animation: aparecer 2s ease-in-out forwards;
+    }
+    @keyframes aparecer {
+      0% {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    footer {
+      background-color: rgba(248, 187, 208, 0.8);
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+    #enlace {
+      display: none;
+      text-align: center;
+      font-size: 20px;
+      color: #1976D2;
+      font-weight: bold;
+    }
+    #enlace a {
+      color: #1976D2;
+      text-decoration: none;
+    }
+    #enlace a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Hola, ¿Cómo estás?</h1>
+    <img src="hello_kitty.jpg" alt="Hello Kitty">
+  </header>
+  <section>
+    <div id="caja">¡Tócame!</div>
+    <img id="movible" src="imagen.jpg" alt="Imagen especial">
+    <div id="pucca-container">
+      <img id="pucca" src="pucca.png" alt="Pucca">
+      <div id="pucca-text">Tócame</div>
+    </div>
+    <div id="enlace">
+      <a href="https://www.youtube.com/watch?v=NfMegACVJQw" target="_blank">Mira este video</a>
+    </div>
+  </section>
+  <footer>
+    <p>Creado con cariño por Jimmy</p>
+  </footer>
+
+  <script>
+    const caja = document.getElementById("caja");
+    const imagen = document.getElementById("movible");
+    const pucca = document.getElementById("pucca");
+    const puccaText = document.getElementById("pucca-text");
+    const enlace = document.getElementById("enlace");
+    const palabras = [
+      "Siempre parece imposible hasta que se hace realidad.",
+      "El éxito no es el final, el fracaso no es fatal: lo que cuenta es el valor de continuar.",
+      "Cree en ti mismo y estarás a medio camino.",
+      "En tus ojos encontré un universo lleno de inspiración, y en tu corazón el cariño que mueve el mío."
+    ];
+    let toques = 0;
+    let fraseIndex = 0;
+
+    // Caja que explota
+    caja.addEventListener("click", () => {
+      toques++;
+      if (toques === 3) {
+        caja.classList.add("explotar");
+        setTimeout(() => {
+          caja.style.display = "none";
+          imagen.style.display = "block";
+          imagen.style.position = "absolute";
+          imagen.style.left = "50%";
+          imagen.style.top = "50%";
+          imagen.style.transform = "translate(-50%, -50%)";
+        }, 500);
+      }
+    });
+
+    // Mostrar las frases en orden
+    imagen.addEventListener("click", function() {
+      if (fraseIndex < palabras.length) {
+        const palabra = document.createElement("div");
+        palabra.textContent = palabras[fraseIndex];
+        palabra.classList.add("frase");
+
+        const offsetX = Math.random() * 200 - 100;
+        const offsetY = Math.random() * 200 - 100;
+        palabra.style.left = `calc(50% + ${offsetX}px)`;
+        palabra.style.top = `calc(50% + ${offsetY}px)`;
+
+        document.body.appendChild(palabra);
+
+        fraseIndex++;
+
+        setTimeout(() => {
+          palabra.remove();
+        }, 5000);
+      } else {
+        imagen.style.display = "none"; // Esconde la imagen
+        pucca.style.display = "block"; // Muestra la imagen de Pucca
+        puccaText.style.display = "block"; // Muestra el texto "Tócame"
+      }
+    });
+
+    // Al tocar Pucca, desaparece y aparece el enlace
+    pucca.addEventListener("click", function() {
+      pucca.style.display = "none"; // Esconde la imagen de Pucca
+      puccaText.style.display = "none"; // Esconde el texto "Tócame"
+      enlace.style.display = "block"; // Muestra el enlace
+    });
+  </script>
+</body>
+</html>
